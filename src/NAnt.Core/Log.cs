@@ -34,13 +34,13 @@ using System.ComponentModel;
 using System.Globalization;
 using System.IO;
 using System.Net.Mail;
-using System.Runtime.Remoting.Lifetime;
 using System.Text;
 
 using NAnt.Core.Types;
 using NAnt.Core.Util;
 
-namespace NAnt.Core {
+namespace NAnt.Core
+{
     /// <summary>
     /// Defines the set of levels recognised by the NAnt logging system.
     /// </summary>
@@ -1445,13 +1445,13 @@ namespace NAnt.Core {
         /// for this instance if one exists; otherwise, a new lifetime service 
         /// object initialized with a lease that will never time out.
         /// </returns>
-        public override Object InitializeLifetimeService() {
-            ILease lease = (ILease) base.InitializeLifetimeService();
-            if (lease.CurrentState == LeaseState.Initial) {
-                lease.InitialLeaseTime = TimeSpan.Zero;
-            }
-            return lease;
-        }
+        // public override Object InitializeLifetimeService() {
+        //     ILease lease = (ILease) base.InitializeLifetimeService();
+        //     if (lease.CurrentState == LeaseState.Initial) {
+        //         lease.InitialLeaseTime = TimeSpan.Zero;
+        //     }
+        //     return lease;
+        // }
 
         #endregion Override implementation of MarshalByRefObject
 
