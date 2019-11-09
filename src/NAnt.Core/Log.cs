@@ -33,9 +33,9 @@ using System.Collections;
 using System.ComponentModel;
 using System.Globalization;
 using System.IO;
+using System.Net.Mail;
 using System.Runtime.Remoting.Lifetime;
 using System.Text;
-using System.Web.Mail;
 
 using NAnt.Core.Types;
 using NAnt.Core.Util;
@@ -935,9 +935,9 @@ namespace NAnt.Core {
                 }
 
                 // create message to send
-                MailMessage mailMessage = new MailMessage();
-                mailMessage.From = GetPropertyValue(properties, "from", null, true);
-                mailMessage.To = GetPropertyValue(properties, prefix + ".to", null, true);
+                MailAddress from = new MailAddress(GetPropertyValue(properties, "from", null, true));
+                MailAddress to = new MailAddress(GetPropertyValue(properties, prefix + ".to", null, true));
+                MailMessage mailMessage = new MailMessage(from, to);
                 mailMessage.Subject = GetPropertyValue(properties, prefix + ".subject",
                     (success) ? "Build Success" : "Build Failure", false);
                 mailMessage.Body = _buffer.ToString();
@@ -1007,8 +1007,8 @@ namespace NAnt.Core {
                 }
 
                 // send the message
-                SmtpMail.SmtpServer = GetPropertyValue(properties, "mailhost", "localhost", false);
-                SmtpMail.Send(mailMessage);
+                SmtpClient client = new SmtpClient(GetPropertyValue(properties, "mailhost", "localhost", false));
+                client.Send(mailMessage);
             } catch (Exception ex) {
                 Console.Error.WriteLine("[MailLogger] E-mail could not be sent!");
                 Console.Error.WriteLine(ex.ToString());
@@ -1089,8 +1089,7 @@ namespace NAnt.Core {
                 }
 
                 // create attachment
-                MailAttachment attachment = new MailAttachment(fileName, 
-                    MailEncoding.UUEncode);
+                Attachment attachment = new Attachment(fileName);
                 // add attachment to mail
                 mail.Attachments.Add(attachment);
             }
