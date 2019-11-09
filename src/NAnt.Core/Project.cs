@@ -1669,7 +1669,7 @@ namespace NAnt.Core {
                     "The NAnt configuration settings in file '{0}' could" 
                     + " not be loaded.  Please ensure this file is available"
                     + " and contains a 'nant' settings node.", 
-                    AppDomain.CurrentDomain.SetupInformation.ConfigurationFile));
+                    ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None).FilePath));
             }
             return configurationNode;
         }
