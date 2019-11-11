@@ -67,124 +67,125 @@ namespace NAnt.Console {
         /// <returns>The result of the real execution</returns>
         [STAThread]
         public static int Main(string[] args) {
-            AppDomain cd = AppDomain.CurrentDomain;
-            AppDomain executionAD = cd;
+            // AppDomain cd = AppDomain.CurrentDomain;
+            // AppDomain executionAD = cd;
 
-            string nantShadowCopyFilesSetting = ConfigurationManager.AppSettings.Get("nant.shadowfiles");
-            string nantCleanupShadowCopyFilesSetting = ConfigurationManager.AppSettings.Get("nant.shadowfiles.cleanup");
+            // string nantShadowCopyFilesSetting = ConfigurationManager.AppSettings.Get("nant.shadowfiles");
+            // string nantCleanupShadowCopyFilesSetting = ConfigurationManager.AppSettings.Get("nant.shadowfiles.cleanup");
 
 
-            Framework runtimeFramework = Framework.GetRuntimeFramework();
-            if (runtimeFramework == null) {
-                // signal error
-                return 1;
-            }
+            // Framework runtimeFramework = Framework.GetRuntimeFramework();
+            // if (runtimeFramework == null) {
+            //     // signal error
+            //     return 1;
+            // }
 
-            string privateBinPath = ConstructPrivateBinPath(runtimeFramework,
-                AppDomain.CurrentDomain.BaseDirectory);
+            // string privateBinPath = ConstructPrivateBinPath(runtimeFramework,
+            //     AppDomain.CurrentDomain.BaseDirectory);
 
-            if (nantShadowCopyFilesSetting != null && bool.Parse(nantShadowCopyFilesSetting) == true) {
-                logger.DebugFormat(CultureInfo.InvariantCulture,
-                    "Shadowing files({0}) -- cleanup={1}", 
-                    nantShadowCopyFilesSetting, nantCleanupShadowCopyFilesSetting);
+            // if (nantShadowCopyFilesSetting != null && bool.Parse(nantShadowCopyFilesSetting) == true) {
+            //     logger.DebugFormat(CultureInfo.InvariantCulture,
+            //         "Shadowing files({0}) -- cleanup={1}", 
+            //         nantShadowCopyFilesSetting, nantCleanupShadowCopyFilesSetting);
 
-                System.AppDomainSetup myDomainSetup = new System.AppDomainSetup();
+            //     System.AppDomainSetup myDomainSetup = new System.AppDomainSetup();
 
-                myDomainSetup.ApplicationBase = AppDomain.CurrentDomain.BaseDirectory;
+            //     myDomainSetup.ApplicationBase = AppDomain.CurrentDomain.BaseDirectory;
 
-                logger.DebugFormat(CultureInfo.InvariantCulture,
-                    "NAntDomain.PrivateBinPath={0}", 
-                    myDomainSetup.PrivateBinPath);
+            //     // logger.DebugFormat(CultureInfo.InvariantCulture,
+            //     //     "NAntDomain.PrivateBinPath={0}", 
+            //     //     myDomainSetup.PrivateBinPath);
 
-                myDomainSetup.PrivateBinPath = privateBinPath;
+            //     myDomainSetup.PrivateBinPath = privateBinPath;
 
-                myDomainSetup.ApplicationName = "NAnt";
+            //     myDomainSetup.ApplicationName = "NAnt";
 
-                // copy the config file location
-                myDomainSetup.ConfigurationFile = AppDomain.CurrentDomain.SetupInformation.ConfigurationFile;
+            //     // copy the config file location
+            //     myDomainSetup.ConfigurationFile = AppDomain.CurrentDomain.SetupInformation.ConfigurationFile;
 
-                logger.DebugFormat(CultureInfo.InvariantCulture,
-                    "NAntDomain.ConfigurationFile={0}", 
-                    myDomainSetup.ConfigurationFile);
+            //     // logger.DebugFormat(CultureInfo.InvariantCulture,
+            //     //     "NAntDomain.ConfigurationFile={0}", 
+            //     //     myDomainSetup.ConfigurationFile);
 
-                // yes, cache the files
-                myDomainSetup.ShadowCopyFiles = "true";
+            //     // yes, cache the files
+            //     myDomainSetup.ShadowCopyFiles = "true";
 
-                // shadowcopy everything in base directory of appdomain and
-                // privatebinpath
-                myDomainSetup.ShadowCopyDirectories = myDomainSetup.ApplicationBase 
-                    + Path.PathSeparator + myDomainSetup.PrivateBinPath;
+            //     // shadowcopy everything in base directory of appdomain and
+            //     // privatebinpath
+            //     myDomainSetup.ShadowCopyDirectories = myDomainSetup.ApplicationBase 
+            //         + Path.PathSeparator + myDomainSetup.PrivateBinPath;
 
-                logger.DebugFormat(CultureInfo.InvariantCulture,
-                    "NAntDomain.ShadowCopyDirectories={0}", 
-                    myDomainSetup.ShadowCopyDirectories);
+            //     // logger.DebugFormat(CultureInfo.InvariantCulture,
+            //     //     "NAntDomain.ShadowCopyDirectories={0}", 
+            //     //     myDomainSetup.ShadowCopyDirectories);
 
-                // try to cache in .\cache folder, if that fails, let the system 
-                // figure it out.
-                string cachePath = Path.Combine(myDomainSetup.ApplicationBase, "cache");
-                DirectoryInfo cachePathInfo = null;
+            //     // try to cache in .\cache folder, if that fails, let the system 
+            //     // figure it out.
+            //     string cachePath = Path.Combine(myDomainSetup.ApplicationBase, "cache");
+            //     DirectoryInfo cachePathInfo = null;
 
-                try {
-                    cachePathInfo = Directory.CreateDirectory(cachePath);
-                } catch (Exception e) {
-                    System.Console.WriteLine("Failed to create: {0}. Using default CachePath." + e.ToString(), cachePath);
-                } finally {
-                    if(cachePathInfo != null) {
-                        myDomainSetup.CachePath = cachePathInfo.FullName;
-                    }
+            //     try {
+            //         cachePathInfo = Directory.CreateDirectory(cachePath);
+            //     } catch (Exception e) {
+            //         System.Console.WriteLine("Failed to create: {0}. Using default CachePath." + e.ToString(), cachePath);
+            //     } finally {
+            //         if(cachePathInfo != null) {
+            //             myDomainSetup.CachePath = cachePathInfo.FullName;
+            //         }
 
-                    logger.DebugFormat(CultureInfo.InvariantCulture,
-                        "NAntDomain.CachePath={0}", 
-                        myDomainSetup.CachePath);
-                }
+            //         logger.DebugFormat(CultureInfo.InvariantCulture,
+            //             "NAntDomain.CachePath={0}", 
+            //             myDomainSetup.CachePath);
+            //     }
 
-                // create the domain.
-                PermissionSet myDomainPermSet = new PermissionSet(PermissionState.Unrestricted);
-                executionAD = AppDomain.CreateDomain(myDomainSetup.ApplicationName, AppDomain.CurrentDomain.Evidence, 
-                    myDomainSetup, myDomainPermSet);
+            //     // create the domain.
+            //     PermissionSet myDomainPermSet = new PermissionSet(PermissionState.Unrestricted);
+            //     executionAD = AppDomain.CreateDomain(myDomainSetup.ApplicationName, AppDomain.CurrentDomain.Evidence, 
+            //         myDomainSetup, myDomainPermSet);
 
-                logger.DebugFormat(CultureInfo.InvariantCulture,
-                    "NAntDomain.SetupInfo:\n{0}", 
-                    executionAD.SetupInformation);
-            }
+            //     logger.DebugFormat(CultureInfo.InvariantCulture,
+            //         "NAntDomain.SetupInfo:\n{0}", 
+            //         executionAD.SetupInformation);
+            // }
 
-            // use helper object to hold (and serialize) args for callback.
-            logger.DebugFormat(CultureInfo.InvariantCulture,
-                "Creating HelperArgs({0})", 
-                args.ToString());
+            // // use helper object to hold (and serialize) args for callback.
+            // logger.DebugFormat(CultureInfo.InvariantCulture,
+            //     "Creating HelperArgs({0})", 
+            //     args.ToString());
 
             HelperArguments helper = new HelperArguments(args, 
-                privateBinPath);
+                "privateBinPath");
 
-            executionAD.DoCallBack(new CrossAppDomainDelegate(helper.CallConsoleRunner));
+            // executionAD.DoCallBack(new CrossAppDomainDelegate(helper.CallConsoleRunner));
+            helper.CallConsoleRunner();
 
-            // unload if remote/new appdomain
-            if (!cd.Equals(executionAD)) {
-                string cachePath = executionAD.SetupInformation.CachePath;
+            // // unload if remote/new appdomain
+            // if (!cd.Equals(executionAD)) {
+            //     string cachePath = executionAD.SetupInformation.CachePath;
 
-                logger.DebugFormat(CultureInfo.InvariantCulture,
-                    "Unloading '{0}' AppDomain", 
-                    executionAD.FriendlyName);
+            //     logger.DebugFormat(CultureInfo.InvariantCulture,
+            //         "Unloading '{0}' AppDomain", 
+            //         executionAD.FriendlyName);
 
-                AppDomain.Unload(executionAD);
+            //     AppDomain.Unload(executionAD);
 
-                if (nantCleanupShadowCopyFilesSetting != null && bool.Parse(nantCleanupShadowCopyFilesSetting) == true) {
-                    logger.DebugFormat(CultureInfo.InvariantCulture,
-                        "Unloading '{0}' AppDomain", 
-                        executionAD.FriendlyName);
-                    try {
-                        logger.DebugFormat(CultureInfo.InvariantCulture,
-                            "Cleaning up CacheFiles in '{0}'", 
-                            cachePath);
+            //     if (nantCleanupShadowCopyFilesSetting != null && bool.Parse(nantCleanupShadowCopyFilesSetting) == true) {
+            //         logger.DebugFormat(CultureInfo.InvariantCulture,
+            //             "Unloading '{0}' AppDomain", 
+            //             executionAD.FriendlyName);
+            //         try {
+            //             logger.DebugFormat(CultureInfo.InvariantCulture,
+            //                 "Cleaning up CacheFiles in '{0}'", 
+            //                 cachePath);
 
-                        Directory.Delete(cachePath, true);
-                    } catch (FileNotFoundException ex) {
-                        logger.Error("Files not found.", ex);
-                    } catch (Exception ex) {
-                        System.Console.WriteLine("Unable to delete cache path '{1}'.\n\n{0}.", ex.ToString(), cachePath);
-                    }
-                }
-            }
+            //             Directory.Delete(cachePath, true);
+            //         } catch (FileNotFoundException ex) {
+            //             logger.Error("Files not found.", ex);
+            //         } catch (Exception ex) {
+            //             System.Console.WriteLine("Unable to delete cache path '{1}'.\n\n{0}.", ex.ToString(), cachePath);
+            //         }
+            //     }
+            // }
 
             if (helper == null || helper.ExitCode == -1) {
                 logger.DebugFormat(
@@ -222,24 +223,24 @@ namespace NAnt.Console {
         /// <returns>
         /// The privatebinpath.
         /// </returns>
-        private static string ConstructPrivateBinPath (Framework runtimeFramework, string baseDir) {
-            StringBuilder sb = new StringBuilder ();
+        // private static string ConstructPrivateBinPath (Framework runtimeFramework, string baseDir) {
+        //     StringBuilder sb = new StringBuilder ();
 
-            foreach (string probePath in runtimeFramework.ProbePaths) {
-                string fullDir = Path.Combine (baseDir, probePath);
-                AppendPrivateBinDir(baseDir, fullDir, sb);
-            }
+        //     foreach (string probePath in runtimeFramework.ProbePaths) {
+        //         string fullDir = Path.Combine (baseDir, probePath);
+        //         AppendPrivateBinDir(baseDir, fullDir, sb);
+        //     }
 
-            // add privatebinpath of current domain to privatebinpath 
-            if (AppDomain.CurrentDomain.SetupInformation.PrivateBinPath != null) {
-                if (sb.Length > 0) {
-                    sb.Append(Path.PathSeparator);
-                }
-                sb.Append(AppDomain.CurrentDomain.SetupInformation.PrivateBinPath);
-            }
+        //     // add privatebinpath of current domain to privatebinpath 
+        //     if (AppDomain.CurrentDomain.SetupInformation.PrivateBinPath != null) {
+        //         if (sb.Length > 0) {
+        //             sb.Append(Path.PathSeparator);
+        //         }
+        //         sb.Append(AppDomain.CurrentDomain.SetupInformation.PrivateBinPath);
+        //     }
 
-            return sb.ToString();
-        }
+        //     return sb.ToString();
+        // }
 
         private static void AppendPrivateBinDir(string baseDir, string dir, StringBuilder sb) {
             if (!Directory.Exists (dir)) {
@@ -398,19 +399,19 @@ namespace NAnt.Console {
                 // explicitly add the lib directory to privatebinpath although 
                 // its added to privatebinpath in the config file, as entries 
                 // in the config file are not reflected in SetupInformation
-                if (Directory.Exists(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "lib"))) {
-                    AppDomain.CurrentDomain.AppendPrivatePath("lib");
-                }
+                // if (Directory.Exists(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "lib"))) {
+                //     AppDomain.CurrentDomain.AppendPrivatePath("lib");
+                // }
 
-                // add framework specific entries to privatebinpath
-                if (_probePaths != null) {
-                    foreach (string probePath in _probePaths.Split(Path.PathSeparator)) {
-                        logger.DebugFormat(CultureInfo.InvariantCulture,
-                            "Adding '{0}' to private bin path.", 
-                            probePath);
-                        AppDomain.CurrentDomain.AppendPrivatePath(probePath);
-                    }
-                }
+                // // add framework specific entries to privatebinpath
+                // if (_probePaths != null) {
+                //     foreach (string probePath in _probePaths.Split(Path.PathSeparator)) {
+                //         logger.DebugFormat(CultureInfo.InvariantCulture,
+                //             "Adding '{0}' to private bin path.", 
+                //             probePath);
+                //         AppDomain.CurrentDomain.AppendPrivatePath(probePath);
+                //     }
+                // }
 
                 MethodInfo mainMethodInfo = null;
 
@@ -458,61 +459,61 @@ namespace NAnt.Console {
             #endregion Private Static Fields
         }
 
-        private class Framework {
-            private readonly string _version;
-            private readonly string[] _probePaths;
+        // private class Framework {
+        //     private readonly string _version;
+        //     private readonly string[] _probePaths;
 
-            private Framework (string version, string [] probePaths) {
-                _version = version;
-                _probePaths = probePaths;
-            }
+        //     private Framework (string version, string [] probePaths) {
+        //         _version = version;
+        //         _probePaths = probePaths;
+        //     }
 
-            public string Version {
-                get { return _version; }
-            }
+        //     public string Version {
+        //         get { return _version; }
+        //     }
 
-            public string [] ProbePaths {
-                get { return _probePaths; }
-            }
+            // public string [] ProbePaths {
+            //     get { return _probePaths; }
+            // }
 
-            public static Framework GetRuntimeFramework () {
+            // public static Framework GetRuntimeFramework () {
 
-                XmlNode nantNode = (XmlNode) ConfigurationManager.GetSection("nant");
-                if (nantNode == null) { 
-                    System.Console.WriteLine("The \"nant\" section in the NAnt"
-                        + " configuration file ({0}) is not available.",
-                        AppDomain.CurrentDomain.SetupInformation.ConfigurationFile);
-                    return null;
-                }
+            //     XmlNode nantNode = (XmlNode) ConfigurationManager.GetSection("nant");
+            //     if (nantNode == null) { 
+            //         System.Console.WriteLine("The \"nant\" section in the NAnt"
+            //             + " configuration file ({0}) is not available.",
+            //             AppDomain.CurrentDomain.SetupInformation.ConfigurationFile);
+            //         return null;
+            //     }
 
-                XmlElement frameworkNode = (XmlElement) nantNode.SelectSingleNode("frameworks/platform[@name='" + Platform + "']/framework[@family='" + FrameworkFamily + "' and @clrversion='" + Environment.Version.ToString(3) + "']");
-                if (frameworkNode == null) {
-                    System.Console.WriteLine("The NAnt configuration file ({0})"
-                        + " does not have a <framework> node for the current"
-                        + " runtime framework.", 
-                        AppDomain.CurrentDomain.SetupInformation.ConfigurationFile);
-                    System.Console.WriteLine(string.Empty);
-                    System.Console.WriteLine("Please add a <framework> node"
-                        + " with family '{0}' and clrversion '{1}' under the"
-                        + " '{2}' platform node.", FrameworkFamily, 
-                        Environment.Version.ToString(3), Platform);
-                    return null;
-                }
+            //     XmlElement frameworkNode = (XmlElement) nantNode.SelectSingleNode("frameworks/platform[@name='" + Platform + "']/framework[@family='" + FrameworkFamily + "' and @clrversion='" + Environment.Version.ToString(3) + "']");
+            //     if (frameworkNode == null) {
+            //         System.Console.WriteLine("The NAnt configuration file ({0})"
+            //             + " does not have a <framework> node for the current"
+            //             + " runtime framework.", 
+            //             AppDomain.CurrentDomain.SetupInformation.ConfigurationFile);
+            //         System.Console.WriteLine(string.Empty);
+            //         System.Console.WriteLine("Please add a <framework> node"
+            //             + " with family '{0}' and clrversion '{1}' under the"
+            //             + " '{2}' platform node.", FrameworkFamily, 
+            //             Environment.Version.ToString(3), Platform);
+            //         return null;
+            //     }
 
-                string frameworkVersion = frameworkNode.GetAttribute("version");
+            //     string frameworkVersion = frameworkNode.GetAttribute("version");
 
-                XmlNodeList includeNodes = frameworkNode.SelectNodes("runtime/probing-paths/directory");
-                ArrayList includes = new ArrayList (includeNodes.Count);
-                foreach (XmlNode node in includeNodes) {
-                    XmlElement includeNode = (XmlElement) node;
-                    string name = includeNode.GetAttribute("name");
-                    includes.Add (name);
-                }
+            //     XmlNodeList includeNodes = frameworkNode.SelectNodes("runtime/probing-paths/directory");
+            //     ArrayList includes = new ArrayList (includeNodes.Count);
+            //     foreach (XmlNode node in includeNodes) {
+            //         XmlElement includeNode = (XmlElement) node;
+            //         string name = includeNode.GetAttribute("name");
+            //         includes.Add (name);
+            //     }
 
-                string[] probePaths = new string[includes.Count];
-                includes.CopyTo (probePaths, 0);
-                return new Framework(frameworkVersion, probePaths);
-            }
-        }
+            //     string[] probePaths = new string[includes.Count];
+            //     includes.CopyTo (probePaths, 0);
+            //     return new Framework(frameworkVersion, probePaths);
+            // }
+        //}
     }
 }
