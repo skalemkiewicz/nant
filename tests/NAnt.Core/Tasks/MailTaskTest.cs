@@ -1518,7 +1518,6 @@ namespace Tests.NAnt.Core.Tasks
         /// Tests sending an email with a badly formatted email address.
         /// </summary>
         [Test]
-        [ExpectedException(typeof(BuildException))]
         public void BadEmailTest()
         {
             string methodName = "BadEmailTest()";
@@ -1533,7 +1532,15 @@ namespace Tests.NAnt.Core.Tasks
             mailTask.Subject = String.Format(_subjectText, methodName);
             mailTask.Message = CreateSampleEmailMessage(methodName);
 
-            mailTask.Execute();
+            try
+            {
+                mailTask.Execute();
+                Assert.Fail();
+            }
+            catch(BuildException)
+            {
+                Assert.Pass();
+            }
         }
 
         /// <summary>
@@ -1541,7 +1548,6 @@ namespace Tests.NAnt.Core.Tasks
         /// as Full Name &lt;address@abcxyz.com&gt;.
         /// </summary>
         [Test]
-        [ExpectedException(typeof(BuildException))]
         public void BadAngleBracketNameEmailTest()
         {
             string methodName = "BadAngleBracketNameEmailTest()";
@@ -1556,7 +1562,15 @@ namespace Tests.NAnt.Core.Tasks
             mailTask.Subject = String.Format(_subjectText, methodName);
             mailTask.Message = CreateSampleEmailMessage(methodName);
 
-            mailTask.Execute();
+            try
+            {
+                mailTask.Execute();
+                Assert.Fail();
+            }
+            catch(BuildException)
+            {
+                Assert.Pass();
+            }
         }
 
         /// <summary>
@@ -1564,7 +1578,6 @@ namespace Tests.NAnt.Core.Tasks
         /// as &lt;address@abcxyz.com&gt; Full Name.
         /// </summary>
         [Test]
-        [ExpectedException(typeof(BuildException))]
         public void BadAngleBracketEmailNameTest()
         {
             string methodName = "BadAngleBracketEmailNameTest()";
@@ -1579,7 +1592,15 @@ namespace Tests.NAnt.Core.Tasks
             mailTask.Subject = String.Format(_subjectText, methodName);
             mailTask.Message = CreateSampleEmailMessage(methodName);
 
-            mailTask.Execute();
+            try
+            {
+                mailTask.Execute();
+                Assert.Fail();
+            }
+            catch(BuildException)
+            {
+                Assert.Pass();
+            }
         }
 
         /// <summary>
@@ -1587,7 +1608,6 @@ namespace Tests.NAnt.Core.Tasks
         /// as (Full Name) address@abcxyz.com.
         /// </summary>
         [Test]
-        [ExpectedException(typeof(BuildException))]
         public void BadParenthesisNameEmailTest()
         {
             string methodName = "BadParenthesisNameEmailTest()";
@@ -1602,7 +1622,15 @@ namespace Tests.NAnt.Core.Tasks
             mailTask.Subject = String.Format(_subjectText, methodName);
             mailTask.Message = CreateSampleEmailMessage(methodName);
 
-            mailTask.Execute();
+            try
+            {
+                mailTask.Execute();
+                Assert.Fail();
+            }
+            catch(BuildException)
+            {
+                Assert.Pass();
+            }
         }
 
         /// <summary>
@@ -1610,7 +1638,6 @@ namespace Tests.NAnt.Core.Tasks
         /// as address@abcxyz.com (Full Name).
         /// </summary>
         [Test]
-        [ExpectedException(typeof(BuildException))]
         public void BadParenthesisEmailNameTest()
         {
             string methodName = "BadParenthesisEmailNameTest()";
@@ -1625,7 +1652,15 @@ namespace Tests.NAnt.Core.Tasks
             mailTask.Subject = String.Format(_subjectText, methodName);
             mailTask.Message = CreateSampleEmailMessage(methodName);
 
-            mailTask.Execute();
+            try
+            {
+                mailTask.Execute();
+                Assert.Fail();
+            }
+            catch(BuildException)
+            {
+                Assert.Pass();
+            }
         }
 
         #endregion Exception Test Methods

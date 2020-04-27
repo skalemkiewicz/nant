@@ -79,7 +79,6 @@ namespace Tests.NAnt.Core.Tasks {
         }
 
         [Test]
-        [ExpectedException(typeof(TestBuildException))]
         public void Test_CallCircularDependencies() {
             // set-up build file
             string _xml = @"
@@ -92,9 +91,16 @@ namespace Tests.NAnt.Core.Tasks {
                         </target>
                         <call target='one' />
                     </project>";
-
-            // run the build
-            RunBuild(_xml);
+            try 
+            {
+                // run the build
+                RunBuild(_xml);
+                Assert.Fail();
+            }
+            catch(TestBuildException)
+            {
+                Assert.Pass();
+            }
         }
 
         [Test]

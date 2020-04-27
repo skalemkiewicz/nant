@@ -37,9 +37,16 @@ namespace Tests.NAnt.Core.Filters {
         }
 
         [Test]
-        [ExpectedException(typeof(TestBuildException))]
         public void UnknownFilterTest () {
-            base.FilterTest(@"<blah />", " ", " ");
+            try 
+            {
+                base.FilterTest(@"<blah />", " ", " ");
+                Assert.Fail();
+            }
+            catch(TestBuildException)
+            {
+                Assert.Pass();
+            }
         }
 
         [Test]

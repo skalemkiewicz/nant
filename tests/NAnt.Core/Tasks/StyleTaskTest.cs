@@ -214,19 +214,25 @@ namespace Tests.NAnt.Core.Tasks {
         }
 
         [Test]
-        [ExpectedException(typeof(TestBuildException))]
         public void Test_NoSrcfiles() {
             string _xml = @"
                 <project>
                     <style style='{0}' />
                 </project>";
             
-            RunBuild(String.Format(CultureInfo.InvariantCulture,
-                _xml, _xslSrcFileName));
+            try
+            {
+                RunBuild(String.Format(CultureInfo.InvariantCulture,
+                    _xml, _xslSrcFileName));
+                Assert.Fail();
+            }
+            catch(TestBuildException)
+            {
+                Assert.Pass();
+            }
         }
 
         [Test]
-        [ExpectedException(typeof(TestBuildException))]
         public void Test_OutWithInfiles() {
             string _xml = @"
                 <project>
@@ -237,11 +243,20 @@ namespace Tests.NAnt.Core.Tasks {
                     </style>
                 </project>";
            
-            RunBuild(String.Format(CultureInfo.InvariantCulture, _xml, _xslSrcFileNameFull, _xmlSrcFileNameFull, Path.Combine(TempDirName, _xmlSrcFileName + "." + _outputFileExtension)));
+            try
+            {
+                RunBuild(String.Format(CultureInfo.InvariantCulture, 
+                    _xml, _xslSrcFileNameFull, _xmlSrcFileNameFull, 
+                    Path.Combine(TempDirName, _xmlSrcFileName + "." + _outputFileExtension)));
+                Assert.Fail();
+            }
+            catch(TestBuildException)
+            {
+                Assert.Pass();
+            }
         }
 
         [Test]
-        [ExpectedException(typeof(TestBuildException))]
         public void Test_XslFileMissing() {
             string _xml = @"
                 <project>
@@ -250,11 +265,20 @@ namespace Tests.NAnt.Core.Tasks {
            
             
             File.Delete(_xslSrcFileNameFull);
-            RunBuild(String.Format(CultureInfo.InvariantCulture, _xml, _xslSrcFileNameFull, _xmlSrcFileNameFull, Path.Combine(TempDirName, _xmlSrcFileName + "." + _outputFileExtension)));
+            try
+            {
+                RunBuild(String.Format(CultureInfo.InvariantCulture, 
+                    _xml, _xslSrcFileNameFull, _xmlSrcFileNameFull, 
+                    Path.Combine(TempDirName, _xmlSrcFileName + "." + _outputFileExtension)));
+                Assert.Fail();
+            }
+            catch(TestBuildException)
+            {
+                Assert.Pass();
+            }
         }
 
         [Test]
-        [ExpectedException(typeof(TestBuildException))]
         public void Test_SourceFileMissing() {
             string _xml = @"
                 <project>
@@ -262,8 +286,17 @@ namespace Tests.NAnt.Core.Tasks {
                 </project>";
                        
             File.Delete(_xmlSrcFileNameFull);
-
-            RunBuild(String.Format(CultureInfo.InvariantCulture, _xml, _xslSrcFileNameFull, _xmlSrcFileNameFull, Path.Combine(TempDirName, _xmlSrcFileName + "." + _outputFileExtension)));
+            try
+            {
+                RunBuild(String.Format(CultureInfo.InvariantCulture, 
+                    _xml, _xslSrcFileNameFull, _xmlSrcFileNameFull, 
+                    Path.Combine(TempDirName, _xmlSrcFileName + "." + _outputFileExtension)));
+                Assert.Fail();
+            }
+            catch(TestBuildException)
+            {
+                Assert.Pass();
+            }
         }
 
         /// <summary>

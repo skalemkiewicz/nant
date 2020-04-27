@@ -131,7 +131,6 @@ namespace Tests.NAnt.Core.Tasks {
         }
 
         [Test]
-        [ExpectedException(typeof(TestBuildException))]
         public void Test_ChildOrder1() {
             string _xml = @"
                     <project>
@@ -147,11 +146,18 @@ namespace Tests.NAnt.Core.Tasks {
                             </when>
                         </choose>
                     </project>";
-            RunBuild(_xml);
+            try
+            {
+                RunBuild(_xml);
+                Assert.Fail();
+            }
+            catch(TestBuildException)
+            {
+                Assert.Pass();
+            }
         }
 
         [Test]
-        [ExpectedException(typeof(TestBuildException))]
         public void Test_ChildOrder2() {
             string _xml = @"
                     <project>
@@ -164,7 +170,15 @@ namespace Tests.NAnt.Core.Tasks {
                             </when>
                         </choose>
                     </project>";
-            RunBuild(_xml);
+            try
+            {
+                RunBuild(_xml);
+                Assert.Fail();
+            }
+            catch(TestBuildException)
+            {
+                Assert.Pass();
+            }
         }
 
         [Test]
@@ -191,17 +205,23 @@ namespace Tests.NAnt.Core.Tasks {
         }
 
         [Test]
-        [ExpectedException(typeof(TestBuildException))]
         public void Test_MissingWhenChild1() {
             string _xml = @"
                     <project>
                         <choose />
                     </project>";
-            RunBuild(_xml);
+            try
+            {
+                RunBuild(_xml);
+                Assert.Fail();
+            }
+            catch(TestBuildException)
+            {
+                Assert.Pass();
+            }
         }
 
         [Test]
-        [ExpectedException(typeof(TestBuildException))]
         public void Test_MissingWhenChild2() {
             string _xml = @"
                     <project>
@@ -211,11 +231,18 @@ namespace Tests.NAnt.Core.Tasks {
                             </otherwise>
                         </choose>
                     </project>";
-            RunBuild(_xml);
+            try
+            {
+                RunBuild(_xml);
+                Assert.Fail();
+            }
+            catch(TestBuildException)
+            {
+                Assert.Pass();
+            }
         }
 
         [Test]
-        [ExpectedException(typeof(TestBuildException))]
         public void Test_InvalidWhenCondition() {
             string _xml = @"
                     <project>
@@ -225,11 +252,18 @@ namespace Tests.NAnt.Core.Tasks {
                             </when>
                         </choose>
                     </project>";
-            RunBuild(_xml);
+            try
+            {
+                RunBuild(_xml);
+                Assert.Fail();
+            }
+            catch(TestBuildException)
+            {
+                Assert.Pass();
+            }
         }
 
         [Test]
-        [ExpectedException(typeof(TestBuildException))]
         public void Test_MissingWhenCondition() {
             string _xml = @"
                     <project>
@@ -239,11 +273,18 @@ namespace Tests.NAnt.Core.Tasks {
                             </when>
                         </choose>
                     </project>";
-            RunBuild(_xml);
+            try
+            {
+                RunBuild(_xml);
+                Assert.Fail();
+            }
+            catch(TestBuildException)
+            {
+                Assert.Pass();
+            }
         }
 
         [Test]
-        [ExpectedException(typeof(TestBuildException))]
         public void Test_EmptyWhenCondition() {
             string _xml = @"
                     <project>
@@ -253,11 +294,18 @@ namespace Tests.NAnt.Core.Tasks {
                             </when>
                         </choose>
                     </project>";
-            RunBuild(_xml);
+            try
+            {
+                RunBuild(_xml);
+                Assert.Fail();
+            }
+            catch(TestBuildException)
+            {
+                Assert.Pass();
+            }
         }
 
         [Test]
-        [ExpectedException(typeof(TestBuildException))]
         public void Test_InvalidChild() {
             string _xml = @"
                     <project>
@@ -268,11 +316,18 @@ namespace Tests.NAnt.Core.Tasks {
                             <if test=""true"" />
                         </choose>
                     </project>";
-            RunBuild(_xml);
+            try
+            {
+                RunBuild(_xml);
+                Assert.Fail();
+            }
+            catch(TestBuildException)
+            {
+                Assert.Pass();
+            }
         }
 
         [Test]
-        [ExpectedException(typeof(TestBuildException))]
         public void Test_InvalidExtension() {
             string _xml = @"
                     <project>
@@ -282,11 +337,18 @@ namespace Tests.NAnt.Core.Tasks {
                             </when>
                         </choose>
                     </project>";
-            RunBuild(_xml);
+            try
+            {
+                RunBuild(_xml);
+                Assert.Fail();
+            }
+            catch(TestBuildException)
+            {
+                Assert.Pass();
+            }
         }
 
         [Test]
-        [ExpectedException(typeof(TestBuildException))]
         public void Test_InvalidWhenParameter() {
             string _xml = @"
                     <project>
@@ -296,11 +358,18 @@ namespace Tests.NAnt.Core.Tasks {
                             </when>
                         </choose>
                     </project>";
-            RunBuild(_xml);
+            try
+            {
+                RunBuild(_xml);
+                Assert.Fail();
+            }
+            catch(TestBuildException)
+            {
+                Assert.Pass();
+            }
         }
 
         [Test]
-        [ExpectedException(typeof(TestBuildException))]
         public void Test_InvalidOtherwiseParameter() {
             string _xml = @"
                     <project>
@@ -313,7 +382,15 @@ namespace Tests.NAnt.Core.Tasks {
                             </otherwise>
                         </choose>
                     </project>";
-            RunBuild(_xml);
+            try
+            {
+                RunBuild(_xml);
+                Assert.Fail();
+            }
+            catch(TestBuildException)
+            {
+                Assert.Pass();
+            }
         }
 
         [Test]
@@ -330,7 +407,6 @@ namespace Tests.NAnt.Core.Tasks {
         }
 
         [Test]
-        [ExpectedException(typeof(TestBuildException))]
         public void Test_FailOnError_True() {
             string _xml = @"
                     <project>
@@ -340,7 +416,15 @@ namespace Tests.NAnt.Core.Tasks {
                             </when>
                         </choose>
                     </project>";
-            RunBuild(_xml);
+            try
+            {
+                RunBuild(_xml);
+                Assert.Fail();
+            }
+            catch(TestBuildException)
+            {
+                Assert.Pass();
+            }
         }
     }
 }

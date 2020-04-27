@@ -185,24 +185,45 @@ namespace Tests.NAnt.Core {
         }
 
         [Test]
-        [ExpectedException(typeof(TestBuildException))]
         public void Test_CircularDependency() {
             // run the build with Target1 dependent on Target3 and vice versa
-            RunBuild(FormatBuildFile("Target1", "true", "false", "Target1"));
+            try
+            {
+                RunBuild(FormatBuildFile("Target1", "true", "false", "Target1"));
+                Assert.Fail();
+            }
+            catch(TestBuildException)
+            {
+                Assert.Pass();
+            }
         }
 
         [Test]
-        [ExpectedException(typeof(TestBuildException))]
         public void Test_UnknowDependentTarget() {
             // run the build with an unknown dependent target
-            RunBuild(FormatBuildFile("Target1", "true", "false", "Unknown"));
+            try
+            {
+                RunBuild(FormatBuildFile("Target1", "true", "false", "Unknown"));
+                Assert.Fail();
+            }
+            catch(TestBuildException)
+            {
+                Assert.Pass();
+            }
         }
 
         [Test]
-        [ExpectedException(typeof(TestBuildException))]
         public void Test_UnknowDefaultTarget() {
             // run the build with an unknown default target
-            RunBuild(FormatBuildFile("Unknown", "true", "false", string.Empty));
+            try
+            {
+                RunBuild(FormatBuildFile("Unknown", "true", "false", string.Empty));
+                Assert.Fail();
+            }
+            catch(TestBuildException)
+            {
+                Assert.Pass();
+            }
         }
 
         #endregion Public Instance Methods

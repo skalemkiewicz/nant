@@ -192,7 +192,6 @@ reefer.maddness",
         }
 
         [Test]
-        [ExpectedException(typeof(TestBuildException))]
         public void Test_IncludesFile_NotExists() {
             const string buildXML = @"
                 <project name=""fileset-test"">
@@ -201,7 +200,15 @@ reefer.maddness",
                     </fileset>
                 </project>";
 
-            RunBuild(buildXML);
+            try
+            {
+                RunBuild(buildXML);
+                Assert.Fail();
+            }
+            catch(TestBuildException)
+            {
+                Assert.Pass();
+            }
         }
 
         [Test]
@@ -217,7 +224,6 @@ reefer.maddness",
         }
 
         [Test]
-        [ExpectedException(typeof(TestBuildException))]
         public void Test_ExcludesFile_NotExists() {
             const string buildXML = @"
                 <project name=""fileset-test"">
@@ -226,7 +232,15 @@ reefer.maddness",
                     </fileset>
                 </project>";
 
-            RunBuild(buildXML);
+            try
+            {
+                RunBuild(buildXML);
+                Assert.Fail();
+            }
+            catch(TestBuildException)
+            {
+                Assert.Pass();
+            }
         }
 
         [Test]

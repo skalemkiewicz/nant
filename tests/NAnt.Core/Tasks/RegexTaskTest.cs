@@ -52,14 +52,21 @@ namespace Tests.NAnt.Core.Tasks {
         }
 
         [Test]
-        [ExpectedException(typeof(TestBuildException))]
         public void Test_RegexNoMatch() {
             string _xml = @"
                     <project name='RegexTests'>
                         <regex pattern=""(?'digit'\d)$"" input='This is a test sentence' />
                         <echo message='${digit}'/>
                     </project>";
-            RunBuild(_xml);
+            try
+            {
+                RunBuild(_xml);
+                Assert.Fail();
+            }
+            catch(TestBuildException)
+            {
+                Assert.Pass();
+            }
         }
     }
 }

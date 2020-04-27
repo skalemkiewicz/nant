@@ -30,21 +30,42 @@ namespace Tests.NAnt.Core.Util {
     [TestFixture]
     public class FileUtilsTest {
         [Test]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void Test_GetFullPath_Null() {
-            FileUtils.GetFullPath(null);
+            try
+            {
+                FileUtils.GetFullPath(null);
+                Assert.Fail();
+            }
+            catch(ArgumentNullException)
+            {
+                Assert.Pass();
+            }
         }
 
         [Test]
-        [ExpectedException(typeof(ArgumentException))]
         public void Test_GetFullPath_Empty() {
-            FileUtils.GetFullPath(string.Empty);
+            try
+            {
+                FileUtils.GetFullPath(string.Empty);
+                Assert.Fail();
+            }
+            catch(ArgumentException)
+            {
+                Assert.Pass();
+            }
         }
 
         [Test]
-        [ExpectedException(typeof(ArgumentException))]
         public void Test_GetFullPath_Whitespace() {
-            FileUtils.GetFullPath(" ");
+            try
+            {
+                FileUtils.GetFullPath(" ");
+                Assert.Fail();
+            }
+            catch(ArgumentException)
+            {
+                Assert.Pass();
+            }
         }
 
         [Test]
@@ -94,15 +115,29 @@ namespace Tests.NAnt.Core.Util {
         }
 
         [Test]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void Test_CombinePaths_Path1_Null() {
-            FileUtils.CombinePaths((string) null, "whatever");
+            try
+            {
+                FileUtils.CombinePaths((string) null, "whatever");
+                Assert.Fail();
+            }
+            catch(ArgumentNullException)
+            {
+                Assert.Pass();
+            }
         }
 
         [Test]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void Test_CombinePaths_Path2_Null() {
-            FileUtils.CombinePaths("whatever", (string) null);
+            try
+            {
+                FileUtils.CombinePaths("whatever", (string) null);
+                Assert.Fail();
+            }
+            catch(ArgumentNullException)
+            {
+                Assert.Pass();
+            }
         }
 
         [Test]
