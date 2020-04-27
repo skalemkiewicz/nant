@@ -303,7 +303,7 @@ namespace Tests.NAnt.Core.Tasks
 
         #region SetUp/TearDown Methods
 
-        [TestFixtureSetUp]
+        [OneTimeSetUp]
         public void Init()
         {
             // Assign the fake smtp port
@@ -334,7 +334,7 @@ namespace Tests.NAnt.Core.Tasks
 
         }
 
-        [TestFixtureTearDown]
+        [OneTimeTearDown]
         public void Shutdown()
         {
             // Shuts down the fake smtp server.
